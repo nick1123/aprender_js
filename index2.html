@@ -1,0 +1,101 @@
+<SCRIPT LANGUAGE="JavaScript">
+    <!-- ;
+
+    // Returns a copy with the elements shuffled
+    function shuffle(array) {
+        var cloned_array = array.slice(0);
+        cloned_array.sort(function() {return 0.5 - Math.random()})
+        return cloned_array;
+    }
+
+    function randomAnswer(questions) {
+        var shuffled_questions = shuffle(questions);
+        var question = shuffled_questions[0];
+        var answer   = questionsAndAnswers[question];
+        return answer;
+    }
+
+    function buildSingleRound(questions, question) {
+        var correct_answer   = questionsAndAnswers[question];
+        var incorrect_answer = randomAnswer(questions);
+
+        while (correct_answer == incorrect_answer) {
+            incorrect_answer = randomAnswer(questions);
+        }
+
+        var possible_answers = shuffle(new Array(correct_answer, incorrect_answer));
+
+        var round = {
+            "question": question, 
+            "correct_answer": correct_answer,
+            "possible_answers": possible_answers}
+
+        return round;
+    }
+
+    function buildRoundsForAllQuestions(questions) {
+        var shuffled_questions = shuffle(questions);
+        var rounds = new Array();
+        var array_length = shuffled_questions.length;
+
+        for (var i = 0; i < array_length; i++) {
+            question = shuffled_questions[i];
+            round = buildSingleRound(questions, question);
+            rounds.push(round);
+        }
+
+        return rounds;
+    }
+
+    function buildGame(questions) {
+        // Add 2 sets of rounds 
+        var normalPracticeRounds = buildRoundsForAllQuestions(questions);
+        var normalPracticeRounds2 = buildRoundsForAllQuestions(questions);
+        normalPracticeRounds = normalPracticeRounds.concat(normalPracticeRounds2);
+
+        var extraPracticeRounds = new Array();
+
+        var game = {
+            "normalPracticeRounds": normalPracticeRounds,
+            "extraPracticeRounds": extraPracticeRounds
+        };
+
+        return game;
+    }
+
+    function nextRound() {
+        return game["normalPracticeRounds"].pop();
+    }
+
+    var questionsAndAnswers = {
+        "Alabama": "Montgomery",
+        "Alaska": "Juneau",
+        "Arizona": "Phoenix",
+        "Arkansas": "Little Rock"};
+
+    var questions = [
+        "Alabama",
+        "Alaska",
+        "Arizona",
+        "Arkansas"];
+
+    var game = buildGame(questions);
+    var currentRound = nextRound();
+
+    // Wait until after the DOM is loaded
+    window.onload = function() {
+        document.getElementById('question_div').innerHTML = currentRound["question"];
+        document.getElementById('possible_answer_1_div').innerHTML = currentRound["possible_answers"][0];
+        document.getElementById('possible_answer_2_div').innerHTML = currentRound["possible_answers"][1];
+    }
+
+    // end hide -->
+</SCRIPT>
+
+<html>
+    <body>
+        <div id="question_div"></div>
+        <div id="possible_answer_1_div"></div>
+        <div id="possible_answer_2_div"></div>
+    </body>
+</html>
