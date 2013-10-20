@@ -25,9 +25,11 @@
 
         var possible_answers = shuffle(new Array(correct_answer, incorrect_answer));
 
+        var correct_answer_index = (possible_answers[0] == correct_answer ? 0 : 1)
         var round = {
             "question": question, 
             "correct_answer": correct_answer,
+            "correct_answer_index": correct_answer_index,
             "possible_answers": possible_answers}
 
         return round;
@@ -63,12 +65,22 @@
         return game;
     }
 
+    function evaluate_answer(answer_index) {
+        if(answer_index == currentRound["correct_answer_index"]) {
+            alert("Yayyy");
+        } 
+        else {
+            alert("boo");
+        }
+
+    }
+
     function nextRound() {
         return game["normalPracticeRounds"].pop();
     }
 
     function buildFormForPossibleAnswer(answer_index, answer_value) {
-        var html = "<FORM onSubmit='' NAME='answer_form_" + answer_index + "'><INPUT TYPE='button' VALUE='" + answer_value + "' onClick='evaluate_answer()'></FORM>";
+        var html = "<FORM onSubmit='' NAME='answer_form_" + answer_index + "'><INPUT TYPE='button' VALUE='" + answer_value + "' onClick='evaluate_answer(" + answer_index + ")'></FORM>";
         return html
     }
 
