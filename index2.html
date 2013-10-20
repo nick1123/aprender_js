@@ -67,6 +67,11 @@
         return game["normalPracticeRounds"].pop();
     }
 
+    function buildFormForPossibleAnswer(answer_index, answer_value) {
+        var html = "<FORM onSubmit='' NAME='answer_form_" + answer_index + "'><INPUT TYPE='button' VALUE='" + answer_value + "' onClick='evaluate_answer()'></FORM>";
+        return html
+    }
+
     var questionsAndAnswers = {
         "Alabama": "Montgomery",
         "Alaska": "Juneau",
@@ -85,8 +90,15 @@
     // Wait until after the DOM is loaded
     window.onload = function() {
         document.getElementById('question_div').innerHTML = currentRound["question"];
-        document.getElementById('possible_answer_1_div').innerHTML = currentRound["possible_answers"][0];
-        document.getElementById('possible_answer_2_div').innerHTML = currentRound["possible_answers"][1];
+
+        var answer_value_0 = currentRound["possible_answers"][0];
+        var html_0 = buildFormForPossibleAnswer(0, answer_value_0)
+        document.getElementById('possible_answer_0_div').innerHTML = html_0
+
+        var answer_value_1 = currentRound["possible_answers"][1];
+        var html_1 = buildFormForPossibleAnswer(1, answer_value_1)
+        document.getElementById('possible_answer_1_div').innerHTML = html_1
+
     }
 
     // end hide -->
@@ -95,7 +107,7 @@
 <html>
     <body>
         <div id="question_div"></div>
+        <div id="possible_answer_0_div"></div>
         <div id="possible_answer_1_div"></div>
-        <div id="possible_answer_2_div"></div>
     </body>
 </html>
