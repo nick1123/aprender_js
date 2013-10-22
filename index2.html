@@ -55,11 +55,8 @@
         var normalPracticeRounds2 = buildRoundsForAllQuestions(questions);
         normalPracticeRounds = normalPracticeRounds.concat(normalPracticeRounds2);
 
-        var extraPracticeRounds = new Array();
-
         var game = {
-            "normalPracticeRounds": normalPracticeRounds,
-            "extraPracticeRounds": extraPracticeRounds
+            "normalPracticeRounds": normalPracticeRounds
         };
 
         return game;
@@ -69,33 +66,43 @@
         if(answer_index == currentRound["correct_answer_index"]) {
             // Use global currentRound
             currentRound = nextRound();
-            embedCurrentRoundDataIntoHtmlBody();
         } 
         else {
-            alert("Try again");
             processWrongAnswer(question);
         }
 
+        embedCurrentRoundDataIntoHtmlBody();
     }
 
     function roundsLeft() {
-        return game["normalPracticeRounds"].length + game["extraPracticeRounds"].length;
+        return game["normalPracticeRounds"].length;
     }
 
     function processWrongAnswer(question) {
-        // Add 2 extra practice rounds for the question
-        round = buildSingleRound(questions, question)
-        game["extraPracticeRounds"].push(round)
-
-        round = buildSingleRound(questions, question)
-        game["extraPracticeRounds"].push(round)
-
-        // Add an extra round to normalPracticeRounds
+        // Add 2 extra practice rounds for the missed question
         round = buildSingleRound(questions, question)
         game["normalPracticeRounds"].push(round)
+
+        round = buildSingleRound(questions, question)
+        game["normalPracticeRounds"].push(round)
+
+        // Randomize rounds so that the 2 new rounds will be mixed in
+        game["normalPracticeRounds"] = shuffle(game["normalPracticeRounds"]);
+
+        // Add 2 extra practice rounds for the missed question
+        round = buildSingleRound(questions, question)
+        game["normalPracticeRounds"].unshift(round)
+
+        round = buildSingleRound(questions, question)
+        game["normalPracticeRounds"].unshift(round)
+
     }
 
     function nextRound() {
+        // Case 1: normalPracticeRounds are present 
+//        if (game["normalPracticeRounds"].length > 0) {
+//            Math.random()
+//        } else
         return game["normalPracticeRounds"].pop();
     }
 
@@ -114,6 +121,8 @@
         var answer_value_1 = currentRound["possible_answers"][1];
         var html_1 = buildFormForPossibleAnswer(1, answer_value_1)
         document.getElementById('possible_answer_1_div').innerHTML = html_1
+
+        document.getElementById('roundsLeft').innerHTML = "Remaining: " + roundsLeft();
     }
 
     var questionsAndAnswers = {
@@ -196,6 +205,8 @@
         <div id="possible_answer_0_div"></div>
         <div>&nbsp;</div>
         <div id="possible_answer_1_div"></div>
+        <div>&nbsp;</div>
+        <div id="roundsLeft" class="text-muted"></div>
       </div>
 
     </div><!-- /.container -->
