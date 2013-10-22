@@ -71,18 +71,22 @@
         } 
         else {
             alert("boo");
-            addQuestionToExtraPracticeRounds(question);
+            processWrongAnswer(question);
         }
 
     }
 
-    function addQuestionToExtraPracticeRounds(question) {
+    function processWrongAnswer(question) {
         // Add 2 extra practice rounds for the question
         round = buildSingleRound(questions, question)
         game["extraPracticeRounds"].push(round)
 
         round = buildSingleRound(questions, question)
         game["extraPracticeRounds"].push(round)
+
+        // Add an extra round to normalPracticeRounds
+        round = buildSingleRound(questions, question)
+        game["normalPracticeRounds"].push(round)
     }
 
     function nextRound() {
