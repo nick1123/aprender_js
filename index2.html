@@ -67,13 +67,19 @@
 
     function evaluate_answer(answer_index) {
         if(answer_index == currentRound["correct_answer_index"]) {
-            alert("Yayyy");
+            // Use global currentRound
+            currentRound = nextRound();
+            embedCurrentRoundDataIntoHtmlBody();
         } 
         else {
-            alert("boo");
+            alert("Try again");
             processWrongAnswer(question);
         }
 
+    }
+
+    function roundsLeft() {
+        return game["normalPracticeRounds"].length + game["extraPracticeRounds"].length;
     }
 
     function processWrongAnswer(question) {
@@ -94,10 +100,20 @@
     }
 
     function buildFormForPossibleAnswer(answer_index, answer_value) {
-        // var html = "<FORM onSubmit='' NAME='answer_form_" + answer_index + "'><INPUT TYPE='button' VALUE='" + answer_value + "' onClick='evaluate_answer(" + answer_index + ")'></FORM>";
-        // var html = "<button class=\"btn btn-default btn-lg\" type=\"button\" onClick='evaluate_answer(" + answer_index + ")'>" + answer_value + "</button>";
         var html = "<button class=\"btn btn-primary btn-lg\" type=\"button\" onClick='evaluate_answer(" + answer_index + ")'>" + answer_value + "</button>";
         return html
+    }
+
+    function embedCurrentRoundDataIntoHtmlBody() {
+        document.getElementById('question_div').innerHTML = currentRound["question"];
+
+        var answer_value_0 = currentRound["possible_answers"][0];
+        var html_0 = buildFormForPossibleAnswer(0, answer_value_0)
+        document.getElementById('possible_answer_0_div').innerHTML = html_0
+
+        var answer_value_1 = currentRound["possible_answers"][1];
+        var html_1 = buildFormForPossibleAnswer(1, answer_value_1)
+        document.getElementById('possible_answer_1_div').innerHTML = html_1
     }
 
     var questionsAndAnswers = {
@@ -117,16 +133,7 @@
 
     // Wait until after the DOM is loaded
     window.onload = function() {
-        document.getElementById('question_div').innerHTML = currentRound["question"];
-
-        var answer_value_0 = currentRound["possible_answers"][0];
-        var html_0 = buildFormForPossibleAnswer(0, answer_value_0)
-        document.getElementById('possible_answer_0_div').innerHTML = html_0
-
-        var answer_value_1 = currentRound["possible_answers"][1];
-        var html_1 = buildFormForPossibleAnswer(1, answer_value_1)
-        document.getElementById('possible_answer_1_div').innerHTML = html_1
-
+        embedCurrentRoundDataIntoHtmlBody();
     }
 
     // end hide -->
