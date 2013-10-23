@@ -64,14 +64,29 @@
 
     function evaluate_answer(answer_index) {
         if(answer_index == currentRound["correct_answer_index"]) {
-            // Use global currentRound
-            currentRound = nextRound();
+            // They answered correctly
+            if (roundsLeft() > 0) {
+                // There are rounds left
+
+                // Use global currentRound
+                currentRound = nextRound();
+
+                // The round has changed so rebuild the displayPackage
+                buildDisplayPackageFromCurrentRound();
+            } else {
+                buildDisplayPackageForGameFinished();
+            }
         } 
         else {
+            // They answered incorrectly
+            question = currentRound["question"]
             processWrongAnswer(question);
+
+            // The roundsLeft has changed so rebuild the displayPackage
+            buildDisplayPackageFromCurrentRound();
         }
 
-        embedCurrentRoundDataIntoHtmlBody();
+        embedDisplayPackageIntoHtml(); 
     }
 
     function roundsLeft() {
@@ -90,39 +105,49 @@
         game["normalPracticeRounds"] = shuffle(game["normalPracticeRounds"]);
 
         // Add 2 extra practice rounds for the missed question
+        // They will be the next 2 rounds
         round = buildSingleRound(questions, question)
-        game["normalPracticeRounds"].unshift(round)
+        game["normalPracticeRounds"].push(round)
 
         round = buildSingleRound(questions, question)
-        game["normalPracticeRounds"].unshift(round)
-
+        game["normalPracticeRounds"].push(round)
     }
 
     function nextRound() {
-        // Case 1: normalPracticeRounds are present 
-//        if (game["normalPracticeRounds"].length > 0) {
-//            Math.random()
-//        } else
         return game["normalPracticeRounds"].pop();
     }
 
     function buildFormForPossibleAnswer(answer_index, answer_value) {
-        var html = "<button class=\"btn btn-primary btn-lg\" type=\"button\" onClick='evaluate_answer(" + answer_index + ")'>" + answer_value + "</button>";
+        var html = "<button class='btn btn-primary btn-lg' type='button' onClick='evaluate_answer(" + answer_index + ")'>" + answer_value + "</button>";
         return html
     }
 
-    function embedCurrentRoundDataIntoHtmlBody() {
-        document.getElementById('question_div').innerHTML = currentRound["question"];
+    function buildDisplayPackageFromCurrentRound() {
+        displayPackage.question_div = currentRound["question"];
 
         var answer_value_0 = currentRound["possible_answers"][0];
         var html_0 = buildFormForPossibleAnswer(0, answer_value_0)
-        document.getElementById('possible_answer_0_div').innerHTML = html_0
+        displayPackage.possible_answer_0_div = html_0
 
         var answer_value_1 = currentRound["possible_answers"][1];
         var html_1 = buildFormForPossibleAnswer(1, answer_value_1)
-        document.getElementById('possible_answer_1_div').innerHTML = html_1
+        displayPackage.possible_answer_1_div = html_1
 
-        document.getElementById('roundsLeft').innerHTML = "Remaining: " + roundsLeft();
+        displayPackage.roundsLeft = "Remaining: " + roundsLeft();
+    }
+
+    function buildDisplayPackageForGameFinished() {
+        displayPackage.question_div          = "Game Complete!";
+        displayPackage.possible_answer_0_div = "<button class='btn btn-primary btn-lg' type='button' onclick='window.location.reload()'>Click to play again</button>";
+        displayPackage.possible_answer_1_div = "";
+        displayPackage.roundsLeft            = "";
+    }
+
+    function embedDisplayPackageIntoHtml() {
+        document.getElementById('question_div').innerHTML          = displayPackage.question_div
+        document.getElementById('possible_answer_0_div').innerHTML = displayPackage.possible_answer_0_div
+        document.getElementById('possible_answer_1_div').innerHTML = displayPackage.possible_answer_1_div 
+        document.getElementById('roundsLeft').innerHTML            = displayPackage.roundsLeft
     }
 
     var questionsAndAnswers = {
@@ -139,10 +164,12 @@
 
     var game = buildGame(questions);
     var currentRound = nextRound();
+    var displayPackage = new Object();
+    buildDisplayPackageFromCurrentRound();
 
     // Wait until after the DOM is loaded
     window.onload = function() {
-        embedCurrentRoundDataIntoHtmlBody();
+        embedDisplayPackageIntoHtml();
     }
 
     // end hide -->
