@@ -174,7 +174,7 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="/bootstrap/assets/ico/favicon.png">
 
-    <title>Starter Template for Bootstrap</title>
+    <title>==TITLE==</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
@@ -194,18 +194,12 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Project name</a>
+          <a class="navbar-brand" href="#">Smart Students</a>
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li class="active"><a href="#">==TITLE==</a></li>
+            <li><a href="#more">More</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -222,7 +216,21 @@
         <div id="possible_answer_1_div"></div>
         <div>&nbsp;</div>
         <div id="roundsLeft" class="text-muted"></div>
+
       </div>
+
+      <div>&nbsp;</div>
+      <div>&nbsp;</div>
+      <div>&nbsp;</div>
+      <div>&nbsp;</div>
+
+      <a name="more"></a>
+      <h3>More Games</h3>
+      <ul>
+        <li><a href="us_state_capitals_small.html">U. S. State Capitals Sample 1-5</a></li>
+        <li><a href="us_state_capitals.html">U. S. State Capitals 1-50</a></li>
+        <li><a href="sat_words_1to100.html">SAT Study Words 1 - 100</a></li>
+      </ul>
 
     </div><!-- /.container -->
 
