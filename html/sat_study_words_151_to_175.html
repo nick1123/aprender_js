@@ -1,207 +1,57 @@
 <SCRIPT LANGUAGE="JavaScript">
 var questions = [
-	"Abhor",
-	"Bigot",
-	"Counterfeit",
-	"Enfranchise",
-	"Hamper",
-	"Kindle",
-	"Noxious",
-	"Placid",
-	"Remuneration",
-	"Talisman",
-	"Abrasive",
-	"Bilk",
-	"Covert",
-	"Engender",
-	"Hangar",
-	"Knotty",
-	"Nuance",
-	"Plagiarism",
-	"Renown",
-	"Tangent",
-	"Abasement",
-	"Billowing",
-	"Cower",
-	"Enhance",
-	"Harangue",
-	"Labyrinth",
-	"Nullify",
-	"Plaintiff",
-	"Replete",
-	"Tangible",
-	"Abrogate",
-	"Blasphemy",
-	"Credible",
-	"Enigma",
-	"Harbingers",
-	"Labyrinthine",
-	"Nuzzle",
-	"Plaudit",
-	"Reprehensible",
-	"Tardy",
-	"Absolution",
-	"Blatant",
-	"Creditable",
-	"Ensconce",
-	"Hasten",
-	"Laceration",
-	"Obdurate",
-	"Plausible",
-	"Reprieve",
+	"Oust",
+	"Tirade",
+	"Acuity",
 	"Tawdry",
-	"Abstain",
-	"Blighted",
-	"Credulous",
-	"Enshroud",
-	"Haughtiness",
-	"Lachrymose",
-	"Obfuscate",
-	"Plethora",
-	"Repudiate",
-	"Tedium",
-	"Abstemious",
-	"Blithe",
-	"Crepuscular",
-	"Enunciation",
-	"Headstrong",
-	"Lackluster",
-	"Objective",
-	"Pliable",
-	"Rescind",
-	"Temper",
-	"Abstruse",
-	"Blunderbuss",
-	"Cringe",
-	"Envenom",
-	"Hedonism",
-	"Laconic",
-	"Oblique",
-	"Plumage",
-	"Resignation",
-	"Tenacious",
-	"Accolade",
-	"Bolster",
-	"Cryptic",
-	"Ephemeral",
-	"Hedonist",
-	"Lamentation",
-	"Obliterate",
-	"Plummet",
+	"Peccadillo",
+	"Prolific",
+	"Profound",
+	"Discriminate",
+	"Redundant",
+	"Paucity",
+	"Nefarious",
+	"Veneer",
+	"Quaff",
+	"Robust",
 	"Resolution",
-	"Tentative",
-	"Acquiesce",
-	"Bombast",
-	"Curtail",
-	"Epicure",
-	"Heed",
-	"Lampoon",
-	"Oblivious",
-	"Podium",
-	"Resonant",
-	"Tenuous"];
+	"Discrepancy",
+	"Unalloyed",
+	"Pariah",
+	"Vehemence",
+	"Proscribe",
+	"Tedium",
+	"Exegesis",
+	"Inexpedient",
+	"Covert",
+	"Torpor"];
 
 var questionsAndAnswers = {
-	"Abhor": "hate",
-	"Bigot": "narrow-minded, prejudiced person",
-	"Counterfeit": "fake; false",
-	"Enfranchise": "give voting rights",
-	"Hamper": "hinder; obstruct",
-	"Kindle": "to start a fire",
-	"Noxious": "harmful; poisonous; lethal",
-	"Placid": "calm; peaceful",
-	"Remuneration": "payment for work done",
-	"Talisman": "lucky charm",
-	"Abrasive": "rough; coarse; harsh",
-	"Bilk": "cheat; defraud",
-	"Covert": "hidden; undercover",
-	"Engender": "cause",
-	"Hangar": "storage area (like garage) for a plane",
-	"Knotty": "complex; difficult to solve",
-	"Nuance": "something subtle; a fine shade of meaning",
-	"Plagiarism": "taking credit for someone else's writing or ideas",
-	"Renown": "fame",
-	"Tangent": "going off the main subject",
-	"Abasement": "humiliation; degradation",
-	"Billowing": "swelling; fluttering; waving",
-	"Cower": "recoil in fear or servility; shrink away from",
-	"Enhance": "improve; make better or clearer",
-	"Harangue": "noisy, attacking speech",
-	"Labyrinth": "a maze",
-	"Nullify": "to counter; make unimportant",
-	"Plaintiff": "petitioner (in court of law)",
-	"Replete": "full",
-	"Tangible": "can be touched",
-	"Abrogate": "cancel; deny; repeal",
-	"Blasphemy": "speech which offends religious sentiments",
-	"Credible": "believable",
-	"Enigma": "puzzle; mystery",
-	"Harbingers": "indicators; bringers of warnings",
-	"Labyrinthine": "complicated; highly convoluted",
-	"Nuzzle": "cuddle; snuggle",
-	"Plaudit": "statement giving strong praise",
-	"Reprehensible": "shameful; very bad",
-	"Tardy": "slow; late; overdue; delayed",
-	"Absolution": "forgiveness; pardon; release",
-	"Blatant": "obvious",
-	"Creditable": "praiseworthy",
-	"Ensconce": "establish firmly in a position",
-	"Hasten": "hurry; accelerate; rush",
-	"Laceration": "a cut",
-	"Obdurate": "stubborn",
-	"Plausible": "can be believed; reasonable",
-	"Reprieve": "a respite; postponement of a sentence",
+	"Oust": "push out of a position",
+	"Tirade": "stream of verbal abuse",
+	"Acuity": "sharpness (mental or visual)",
 	"Tawdry": "of little value; gaudy",
-	"Abstain": "desist; go without; withdraw",
-	"Blighted": "damaged; destroyed; ruined",
-	"Credulous": "gullible; ready to believe anything",
-	"Enshroud": "cover",
-	"Haughtiness": "arrogance; pride",
-	"Lachrymose": "tearful; sad",
-	"Obfuscate": "deliberately make something difficult to understand",
-	"Plethora": "an excess",
-	"Repudiate": "shun; eschew",
-	"Tedium": "boredom",
-	"Abstemious": "self denying; refraining from indulging",
-	"Blithe": "free-spirited; carefree",
-	"Crepuscular": "active at dawn and dusk",
-	"Enunciation": "clear pronunciation; accent; articulation",
-	"Headstrong": "stubborn; willful",
-	"Lackluster": "dull; monotonous; bland",
-	"Objective": "unbiased; not subjective",
-	"Pliable": "flexible; not stubborn",
-	"Rescind": "retract; repeal",
-	"Temper": "to moderate; soften",
-	"Abstruse": "difficult to understand; obscure",
-	"Blunderbuss": "1. ancient weapon (type of gun); 2. a clumsy person",
-	"Cringe": "recoil; flinch; shy away",
-	"Envenom": "to cause bitterness and bad feeling",
-	"Hedonism": "self indulgence; pleasure-seeking",
-	"Laconic": "using few words; brief; to the point",
-	"Oblique": "indirect; slanting",
-	"Plumage": "feathers of a bird",
-	"Resignation": "acceptance of fate",
-	"Tenacious": "stubborn; resolute; holding firm to a purpose",
-	"Accolade": "tribute; honor; praise",
-	"Bolster": "support; prop up",
-	"Cryptic": "puzzling; enigmatic",
-	"Ephemeral": "short-lived",
-	"Hedonist": "a pleasure seeker",
-	"Lamentation": "expression of regret or sorrow",
-	"Obliterate": "destroy; demolish; eradicate",
-	"Plummet": "fall suddenly and steeply",
+	"Peccadillo": "minor weakness; trivial offence",
+	"Prolific": "producing a lot",
+	"Profound": "having deep meaning",
+	"Discriminate": "to make a clear distinction; see the difference",
+	"Redundant": "unnecessary; superfluous",
+	"Paucity": "shortage",
+	"Nefarious": "wicked; immoral; disreputable",
+	"Veneer": "surface coating",
+	"Quaff": "drink down quickly",
+	"Robust": "strong; healthy; tough",
 	"Resolution": "determination",
-	"Tentative": "not certain",
-	"Acquiesce": "to agree to; give in to",
-	"Bombast": "arrogant, pompous language",
-	"Curtail": "cut short",
-	"Epicure": "someone who appreciates good food and drink",
-	"Heed": "listen to",
-	"Lampoon": "ridicule; spoof",
-	"Oblivious": "totally unaware",
-	"Podium": "raised platform",
-	"Resonant": "echoing",
-	"Tenuous": "flimsy; not solid"};
+	"Discrepancy": "something which does not match up; inconsistency",
+	"Unalloyed": "undiluted; total",
+	"Pariah": "an outcast from society",
+	"Vehemence": "violence; fervor; forcefulness",
+	"Proscribe": "forbid",
+	"Tedium": "boredom",
+	"Exegesis": "scholarly explanation or interpretation",
+	"Inexpedient": "not advisable",
+	"Covert": "hidden; undercover",
+	"Torpor": "dormancy; sluggishness; inactivity"};
 </script>
 <SCRIPT LANGUAGE="JavaScript">
     <!-- ;
@@ -379,7 +229,7 @@ var questionsAndAnswers = {
     <meta name="author" content="">
     <link rel="shortcut icon" href="/bootstrap/assets/ico/favicon.png">
 
-    <title>SAT Study Words 1 - 100</title>
+    <title>SAT Study Words 151 to 175</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
@@ -389,8 +239,8 @@ var questionsAndAnswers = {
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-      <script src="/bootstrap/assets/js/html5shiv.js"></script>
-      <script src="/bootstrap/assets/js/respond.min.js"></script>
+    <script src="/bootstrap/assets/js/html5shiv.js"></script>
+    <script src="/bootstrap/assets/js/respond.min.js"></script>
     <![endif]-->
   </head>
 
@@ -403,7 +253,7 @@ var questionsAndAnswers = {
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">SAT Study Words 1 - 100</a></li>
+            <li class="active"><a href="#">SAT Study Words 151 to 175</a></li>
             <li><a href="#more">More</a></li>
           </ul>
         </div><!--/.nav-collapse -->
@@ -414,7 +264,7 @@ var questionsAndAnswers = {
 
       <div class="starter-template">
         <h1>
-            <div id="question_div"></div>
+          <div id="question_div"></div>
         </h1>
         <div id="possible_answer_0_div"></div>
         <div>&nbsp;</div>
@@ -430,12 +280,95 @@ var questionsAndAnswers = {
       <div>&nbsp;</div>
 
       <a name="more"></a>
-      <h3>More Games</h3>
+      <h3>U.S. State Capitals</h3>
       <ul>
         <li><a href="us_state_capitals_small.html">U. S. State Capitals Sample 1-5</a></li>
         <li><a href="us_state_capitals.html">U. S. State Capitals 1-50</a></li>
-        <li><a href="sat_words_1to100.html">SAT Study Words 1 - 100</a></li>
       </ul>
+
+      <h3>999 SAT Study Words (broken into groups of 25)</h3>
+      <div class="row">
+        <div class="col-lg-2">
+          <ul>
+            <li><a href='sat_study_words_1_to_25.html'>1 to 25</a>
+            <li><a href='sat_study_words_26_to_50.html'>26 to 50</a>
+            <li><a href='sat_study_words_51_to_75.html'>51 to 75</a>
+            <li><a href='sat_study_words_76_to_100.html'>76 to 100</a>
+            <li><a href='sat_study_words_1_to_100.html'>1 to 100</a>
+
+            <li><a href='sat_study_words_101_to_125.html'>101 to 125</a>
+            <li><a href='sat_study_words_126_to_150.html'>126 to 150</a>
+            <li><a href='sat_study_words_151_to_175.html'>151 to 175</a>
+            <li><a href='sat_study_words_176_to_200.html'>176 to 200</a>
+            <li><a href='sat_study_words_101_to_200.html'>101 to 200</a>
+
+          </ul>
+        </div>
+        <div class="col-lg-2">
+          <ul>
+            <li><a href='sat_study_words_201_to_225.html'>201 to 225</a>
+            <li><a href='sat_study_words_226_to_250.html'>226 to 250</a>
+            <li><a href='sat_study_words_251_to_275.html'>251 to 275</a>
+            <li><a href='sat_study_words_276_to_300.html'>276 to 300</a>
+            <li><a href='sat_study_words_201_to_300.html'>201 to 300</a>
+
+            <li><a href='sat_study_words_301_to_325.html'>301 to 325</a>
+            <li><a href='sat_study_words_326_to_350.html'>326 to 350</a>
+            <li><a href='sat_study_words_351_to_375.html'>351 to 375</a>
+            <li><a href='sat_study_words_376_to_400.html'>376 to 400</a>
+            <li><a href='sat_study_words_301_to_400.html'>301 to 400</a>
+          </ul>
+        </div>
+        <div class="col-lg-2">
+          <ul>
+            <li><a href='sat_study_words_401_to_425.html'>401 to 425</a>
+            <li><a href='sat_study_words_426_to_450.html'>426 to 450</a>
+            <li><a href='sat_study_words_451_to_475.html'>451 to 475</a>
+            <li><a href='sat_study_words_476_to_500.html'>476 to 500</a>
+            <li><a href='sat_study_words_401_to_500.html'>401 to 500</a>
+
+            <li><a href='sat_study_words_501_to_525.html'>501 to 525</a>
+            <li><a href='sat_study_words_526_to_550.html'>526 to 550</a>
+            <li><a href='sat_study_words_551_to_575.html'>551 to 575</a>
+            <li><a href='sat_study_words_576_to_600.html'>576 to 600</a>
+            <li><a href='sat_study_words_501_to_600.html'>501 to 600</a>
+
+          </ul>
+        </div>
+        <div class="col-lg-2">
+          <ul>
+            <li><a href='sat_study_words_601_to_625.html'>601 to 625</a>
+            <li><a href='sat_study_words_626_to_650.html'>626 to 650</a>
+            <li><a href='sat_study_words_651_to_675.html'>651 to 675</a>
+            <li><a href='sat_study_words_676_to_700.html'>676 to 700</a>
+            <li><a href='sat_study_words_601_to_700.html'>601 to 700</a>
+
+            <li><a href='sat_study_words_701_to_725.html'>701 to 725</a>
+            <li><a href='sat_study_words_726_to_750.html'>726 to 750</a>
+            <li><a href='sat_study_words_751_to_775.html'>751 to 775</a>
+            <li><a href='sat_study_words_776_to_800.html'>776 to 800</a>
+            <li><a href='sat_study_words_701_to_800.html'>701 to 800</a>
+
+          </ul>
+        </div>
+        <div class="col-lg-2">
+          <ul>
+            <li><a href='sat_study_words_801_to_825.html'>801 to 825</a>
+            <li><a href='sat_study_words_826_to_850.html'>826 to 850</a>
+            <li><a href='sat_study_words_851_to_875.html'>851 to 875</a>
+            <li><a href='sat_study_words_876_to_900.html'>876 to 900</a>
+            <li><a href='sat_study_words_801_to_900.html'>801 to 900</a>
+
+            <li><a href='sat_study_words_901_to_925.html'>901 to 925</a>
+            <li><a href='sat_study_words_926_to_950.html'>926 to 950</a>
+            <li><a href='sat_study_words_951_to_975.html'>951 to 975</a>
+            <li><a href='sat_study_words_976_to_1000.html'>976 to 999</a>
+            <li><a href='sat_study_words_901_to_1000.html'>901 to 999</a>
+
+            <li><a href='sat_study_words_1_to_1000_randomized.html'>1 to 999</a>
+          </ul>
+        </div>
+      </div>
 
     </div><!-- /.container -->
 

@@ -1,0 +1,384 @@
+<SCRIPT LANGUAGE="JavaScript">
+var questions = [
+	"Dilettante",
+	"Inconspicuous",
+	"Peremptory",
+	"Penury",
+	"Inadvertent",
+	"Contumacious",
+	"Nuzzle",
+	"Furtive",
+	"Merge",
+	"Incongruous",
+	"Navigable",
+	"Hyperbole",
+	"Vagrant",
+	"Epistle",
+	"Protean",
+	"Germane",
+	"Indifferent",
+	"Infallible",
+	"Skeptical",
+	"Annex (v)",
+	"Zealot",
+	"Whimsical",
+	"Fatuous",
+	"Iconoclast",
+	"Desecration"];
+
+var questionsAndAnswers = {
+	"Dilettante": "person who dabbles in a subject without serious study",
+	"Inconspicuous": "not easily seen; subtle; not noticeable",
+	"Peremptory": "in a commanding manner",
+	"Penury": "poverty",
+	"Inadvertent": "not intentional",
+	"Contumacious": "stubborn",
+	"Nuzzle": "cuddle; snuggle",
+	"Furtive": "hidden and secret",
+	"Merge": "come together",
+	"Incongruous": "not fitting in; out of place",
+	"Navigable": "suitable for sailing",
+	"Hyperbole": "grossly exaggerated speech",
+	"Vagrant": "person wandering without a home",
+	"Epistle": "a letter (form of communication)",
+	"Protean": "changeable",
+	"Germane": "relevant",
+	"Indifferent": "1. neutral; 2. not outstanding",
+	"Infallible": "perfect; flawless; cannot make mistakes",
+	"Skeptical": "doubting; not gullible",
+	"Annex (v)": "take possession of; seize; capture",
+	"Zealot": "fanatic",
+	"Whimsical": "capricious; changeable",
+	"Fatuous": "silly; foolish",
+	"Iconoclast": "person who opposes orthodoxy",
+	"Desecration": "spoiling something holy"};
+</script>
+<SCRIPT LANGUAGE="JavaScript">
+    <!-- ;
+
+    // Returns a copy with the elements shuffled
+    function shuffle(array) {
+        var cloned_array = array.slice(0);
+        cloned_array.sort(function() {return 0.5 - Math.random()})
+        return cloned_array;
+    }
+
+    function randomAnswer(questions) {
+        var shuffled_questions = shuffle(questions);
+        var question = shuffled_questions[0];
+        var answer   = questionsAndAnswers[question];
+        return answer;
+    }
+
+    function buildSingleRound(questions, question) {
+        var correct_answer   = questionsAndAnswers[question];
+        var incorrect_answer = randomAnswer(questions);
+
+        while (correct_answer == incorrect_answer) {
+            incorrect_answer = randomAnswer(questions);
+        }
+
+        var possible_answers = shuffle(new Array(correct_answer, incorrect_answer));
+
+        var correct_answer_index = (possible_answers[0] == correct_answer ? 0 : 1)
+        var round = {
+            "question": question, 
+            "correct_answer": correct_answer,
+            "correct_answer_index": correct_answer_index,
+            "possible_answers": possible_answers}
+
+        return round;
+    }
+
+    function buildRoundsForAllQuestions(questions) {
+        var shuffled_questions = shuffle(questions);
+        var rounds = new Array();
+        var array_length = shuffled_questions.length;
+
+        for (var i = 0; i < array_length; i++) {
+            question = shuffled_questions[i];
+            round = buildSingleRound(questions, question);
+            rounds.push(round);
+        }
+
+        return rounds;
+    }
+
+    function buildGame(questions) {
+        // Add 2 sets of rounds 
+        var normalPracticeRounds = buildRoundsForAllQuestions(questions);
+        var normalPracticeRounds2 = buildRoundsForAllQuestions(questions);
+        normalPracticeRounds = normalPracticeRounds.concat(normalPracticeRounds2);
+
+        var game = {
+            "normalPracticeRounds": normalPracticeRounds
+        };
+
+        return game;
+    }
+
+    function evaluate_answer(answer_index) {
+        if(answer_index == currentRound["correct_answer_index"]) {
+            // They answered correctly
+            if (roundsLeft() > 0) {
+                // There are rounds left
+
+                // Use global currentRound
+                currentRound = nextRound();
+
+                // The round has changed so rebuild the displayPackage
+                buildDisplayPackageFromCurrentRound();
+            } else {
+                buildDisplayPackageForGameFinished();
+            }
+        } 
+        else {
+            // They answered incorrectly
+            question = currentRound["question"]
+            processWrongAnswer(question);
+
+            // The roundsLeft has changed so rebuild the displayPackage
+            buildDisplayPackageFromCurrentRound();
+        }
+
+        embedDisplayPackageIntoHtml(); 
+    }
+
+    function roundsLeft() {
+        return game["normalPracticeRounds"].length;
+    }
+
+    function processWrongAnswer(question) {
+        // Add 2 extra practice rounds for the missed question
+        round = buildSingleRound(questions, question)
+        game["normalPracticeRounds"].push(round)
+
+        round = buildSingleRound(questions, question)
+        game["normalPracticeRounds"].push(round)
+
+        // Randomize rounds so that the 2 new rounds will be mixed in
+        game["normalPracticeRounds"] = shuffle(game["normalPracticeRounds"]);
+
+        // Add 2 extra practice rounds for the missed question
+        // They will be the next 2 rounds
+        round = buildSingleRound(questions, question)
+        game["normalPracticeRounds"].push(round)
+
+        round = buildSingleRound(questions, question)
+        game["normalPracticeRounds"].push(round)
+    }
+
+    function nextRound() {
+        return game["normalPracticeRounds"].pop();
+    }
+
+    function buildFormForPossibleAnswer(answer_index, answer_value) {
+        var html = "<button class='btn btn-primary btn-lg' type='button' onClick='evaluate_answer(" + answer_index + ")'>" + answer_value + "</button>";
+        return html
+    }
+
+    function buildDisplayPackageFromCurrentRound() {
+        displayPackage.question_div = currentRound["question"];
+
+        var answer_value_0 = currentRound["possible_answers"][0];
+        var html_0 = buildFormForPossibleAnswer(0, answer_value_0)
+        displayPackage.possible_answer_0_div = html_0
+
+        var answer_value_1 = currentRound["possible_answers"][1];
+        var html_1 = buildFormForPossibleAnswer(1, answer_value_1)
+        displayPackage.possible_answer_1_div = html_1
+
+        displayPackage.roundsLeft = "Remaining: " + roundsLeft();
+    }
+
+    function buildDisplayPackageForGameFinished() {
+        displayPackage.question_div          = "Game Complete!";
+        displayPackage.possible_answer_0_div = "<button class='btn btn-primary btn-lg' type='button' onclick='window.location.reload()'>Click to play again</button>";
+        displayPackage.possible_answer_1_div = "";
+        displayPackage.roundsLeft            = "";
+    }
+
+    function embedDisplayPackageIntoHtml() {
+        document.getElementById('question_div').innerHTML          = displayPackage.question_div
+        document.getElementById('possible_answer_0_div').innerHTML = displayPackage.possible_answer_0_div
+        document.getElementById('possible_answer_1_div').innerHTML = displayPackage.possible_answer_1_div 
+        document.getElementById('roundsLeft').innerHTML            = displayPackage.roundsLeft
+    }
+
+    var game = buildGame(questions);
+    var currentRound = nextRound();
+    var displayPackage = new Object();
+    buildDisplayPackageFromCurrentRound();
+
+    // Wait until after the DOM is loaded
+    window.onload = function() {
+        embedDisplayPackageIntoHtml();
+    }
+
+    // end hide -->
+</SCRIPT>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/bootstrap/assets/ico/favicon.png">
+
+    <title>SAT Study Words 176 to 200</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/bootstrap/custom.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/bootstrap/assets/js/html5shiv.js"></script>
+    <script src="/bootstrap/assets/js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Smart Students</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">SAT Study Words 176 to 200</a></li>
+            <li><a href="#more">More</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="starter-template">
+        <h1>
+          <div id="question_div"></div>
+        </h1>
+        <div id="possible_answer_0_div"></div>
+        <div>&nbsp;</div>
+        <div id="possible_answer_1_div"></div>
+        <div>&nbsp;</div>
+        <div id="roundsLeft" class="text-muted"></div>
+
+      </div>
+
+      <div>&nbsp;</div>
+      <div>&nbsp;</div>
+      <div>&nbsp;</div>
+      <div>&nbsp;</div>
+
+      <a name="more"></a>
+      <h3>U.S. State Capitals</h3>
+      <ul>
+        <li><a href="us_state_capitals_small.html">U. S. State Capitals Sample 1-5</a></li>
+        <li><a href="us_state_capitals.html">U. S. State Capitals 1-50</a></li>
+      </ul>
+
+      <h3>999 SAT Study Words (broken into groups of 25)</h3>
+      <div class="row">
+        <div class="col-lg-2">
+          <ul>
+            <li><a href='sat_study_words_1_to_25.html'>1 to 25</a>
+            <li><a href='sat_study_words_26_to_50.html'>26 to 50</a>
+            <li><a href='sat_study_words_51_to_75.html'>51 to 75</a>
+            <li><a href='sat_study_words_76_to_100.html'>76 to 100</a>
+            <li><a href='sat_study_words_1_to_100.html'>1 to 100</a>
+
+            <li><a href='sat_study_words_101_to_125.html'>101 to 125</a>
+            <li><a href='sat_study_words_126_to_150.html'>126 to 150</a>
+            <li><a href='sat_study_words_151_to_175.html'>151 to 175</a>
+            <li><a href='sat_study_words_176_to_200.html'>176 to 200</a>
+            <li><a href='sat_study_words_101_to_200.html'>101 to 200</a>
+
+          </ul>
+        </div>
+        <div class="col-lg-2">
+          <ul>
+            <li><a href='sat_study_words_201_to_225.html'>201 to 225</a>
+            <li><a href='sat_study_words_226_to_250.html'>226 to 250</a>
+            <li><a href='sat_study_words_251_to_275.html'>251 to 275</a>
+            <li><a href='sat_study_words_276_to_300.html'>276 to 300</a>
+            <li><a href='sat_study_words_201_to_300.html'>201 to 300</a>
+
+            <li><a href='sat_study_words_301_to_325.html'>301 to 325</a>
+            <li><a href='sat_study_words_326_to_350.html'>326 to 350</a>
+            <li><a href='sat_study_words_351_to_375.html'>351 to 375</a>
+            <li><a href='sat_study_words_376_to_400.html'>376 to 400</a>
+            <li><a href='sat_study_words_301_to_400.html'>301 to 400</a>
+          </ul>
+        </div>
+        <div class="col-lg-2">
+          <ul>
+            <li><a href='sat_study_words_401_to_425.html'>401 to 425</a>
+            <li><a href='sat_study_words_426_to_450.html'>426 to 450</a>
+            <li><a href='sat_study_words_451_to_475.html'>451 to 475</a>
+            <li><a href='sat_study_words_476_to_500.html'>476 to 500</a>
+            <li><a href='sat_study_words_401_to_500.html'>401 to 500</a>
+
+            <li><a href='sat_study_words_501_to_525.html'>501 to 525</a>
+            <li><a href='sat_study_words_526_to_550.html'>526 to 550</a>
+            <li><a href='sat_study_words_551_to_575.html'>551 to 575</a>
+            <li><a href='sat_study_words_576_to_600.html'>576 to 600</a>
+            <li><a href='sat_study_words_501_to_600.html'>501 to 600</a>
+
+          </ul>
+        </div>
+        <div class="col-lg-2">
+          <ul>
+            <li><a href='sat_study_words_601_to_625.html'>601 to 625</a>
+            <li><a href='sat_study_words_626_to_650.html'>626 to 650</a>
+            <li><a href='sat_study_words_651_to_675.html'>651 to 675</a>
+            <li><a href='sat_study_words_676_to_700.html'>676 to 700</a>
+            <li><a href='sat_study_words_601_to_700.html'>601 to 700</a>
+
+            <li><a href='sat_study_words_701_to_725.html'>701 to 725</a>
+            <li><a href='sat_study_words_726_to_750.html'>726 to 750</a>
+            <li><a href='sat_study_words_751_to_775.html'>751 to 775</a>
+            <li><a href='sat_study_words_776_to_800.html'>776 to 800</a>
+            <li><a href='sat_study_words_701_to_800.html'>701 to 800</a>
+
+          </ul>
+        </div>
+        <div class="col-lg-2">
+          <ul>
+            <li><a href='sat_study_words_801_to_825.html'>801 to 825</a>
+            <li><a href='sat_study_words_826_to_850.html'>826 to 850</a>
+            <li><a href='sat_study_words_851_to_875.html'>851 to 875</a>
+            <li><a href='sat_study_words_876_to_900.html'>876 to 900</a>
+            <li><a href='sat_study_words_801_to_900.html'>801 to 900</a>
+
+            <li><a href='sat_study_words_901_to_925.html'>901 to 925</a>
+            <li><a href='sat_study_words_926_to_950.html'>926 to 950</a>
+            <li><a href='sat_study_words_951_to_975.html'>951 to 975</a>
+            <li><a href='sat_study_words_976_to_1000.html'>976 to 999</a>
+            <li><a href='sat_study_words_901_to_1000.html'>901 to 999</a>
+
+            <li><a href='sat_study_words_1_to_1000_randomized.html'>1 to 999</a>
+          </ul>
+        </div>
+      </div>
+
+    </div><!-- /.container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/bootstrap/assets/js/jquery.js"></script>
+    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+  </body>
+</html>
+
+

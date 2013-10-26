@@ -22,11 +22,11 @@ files.each do |file|
   javascript_variable_questions = "var questions = [\n" + javascript_variable_questions.join(",\n") + "];"
   javascript_variable_questions_and_answers = "var questionsAndAnswers = {\n" + javascript_variable_questions_and_answers.join(",\n") + "};"
 
-  html_file = file.gsub("tsv", "html")
+  html_file = "html/" + file.gsub("tsv", "html")
 
   file_question_javascript = "<SCRIPT LANGUAGE=\"JavaScript\">\n#{javascript_variable_questions}\n\n#{javascript_variable_questions_and_answers}\n</script>\n"
 
-  file_contents = file_question_javascript + IO.read("game_template.txt")
+  file_contents = file_question_javascript + IO.read("game_template.html")
   file_contents.gsub!("==TITLE==", meta_info["title"])
 
   File.open(html_file, 'w') {|f| f.write(file_contents)}
