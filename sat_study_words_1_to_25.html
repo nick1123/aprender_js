@@ -1,0 +1,281 @@
+<SCRIPT LANGUAGE="JavaScript">
+var questions = [
+	"Paramount",
+	"Labyrinthine",
+	"Apathetic",
+	"Didactic",
+	"Odious",
+	"Charlatan",
+	"Plausible",
+	"Prostration",
+	"Obdurate",
+	"Rebuttal",
+	"Perdition",
+	"Lackluster",
+	"Assuage",
+	"Languish",
+	"Gaunt",
+	"Acrophobia",
+	"Archetype",
+	"Ratify",
+	"Innovate",
+	"Circumspect",
+	"Eclectic",
+	"Prudent",
+	"Disparity",
+	"Ingrate",
+	"Allay"];
+
+var questionsAndAnswers = {
+	"Paramount": "of supreme importance",
+	"Labyrinthine": "complicated; highly convoluted",
+	"Apathetic": "indifferent; uninterested; lethargic",
+	"Didactic": "intended to teach; instructive",
+	"Odious": "hateful",
+	"Charlatan": "trickster who claims knowledge he doesn't have",
+	"Plausible": "can be believed; reasonable",
+	"Prostration": "1. lying face down; 2. be overcome with extreme weakness",
+	"Obdurate": "stubborn",
+	"Rebuttal": "denial",
+	"Perdition": "damnation",
+	"Lackluster": "dull; monotonous; bland",
+	"Assuage": "to calm",
+	"Languish": "decay; fade away; get weaker",
+	"Gaunt": "emaciated; bony and angular",
+	"Acrophobia": "fear of heights",
+	"Archetype": "classic example of",
+	"Ratify": "approve; consent",
+	"Innovate": "create; introduce something new",
+	"Circumspect": "cautious; considering all sides",
+	"Eclectic": "taking things from different sources",
+	"Prudent": "cautious; wise",
+	"Disparity": "an inequality",
+	"Ingrate": "ungrateful person",
+	"Allay": "to lessen"};
+</script>
+<SCRIPT LANGUAGE="JavaScript">
+    <!-- ;
+
+    // Returns a copy with the elements shuffled
+    function shuffle(array) {
+        var cloned_array = array.slice(0);
+        cloned_array.sort(function() {return 0.5 - Math.random()})
+        return cloned_array;
+    }
+
+    function randomAnswer(questions) {
+        var shuffled_questions = shuffle(questions);
+        var question = shuffled_questions[0];
+        var answer   = questionsAndAnswers[question];
+        return answer;
+    }
+
+    function buildSingleRound(questions, question) {
+        var correct_answer   = questionsAndAnswers[question];
+        var incorrect_answer = randomAnswer(questions);
+
+        while (correct_answer == incorrect_answer) {
+            incorrect_answer = randomAnswer(questions);
+        }
+
+        var possible_answers = shuffle(new Array(correct_answer, incorrect_answer));
+
+        var correct_answer_index = (possible_answers[0] == correct_answer ? 0 : 1)
+        var round = {
+            "question": question, 
+            "correct_answer": correct_answer,
+            "correct_answer_index": correct_answer_index,
+            "possible_answers": possible_answers}
+
+        return round;
+    }
+
+    function buildRoundsForAllQuestions(questions) {
+        var shuffled_questions = shuffle(questions);
+        var rounds = new Array();
+        var array_length = shuffled_questions.length;
+
+        for (var i = 0; i < array_length; i++) {
+            question = shuffled_questions[i];
+            round = buildSingleRound(questions, question);
+            rounds.push(round);
+        }
+
+        return rounds;
+    }
+
+    function buildGame(questions) {
+        // Add 2 sets of rounds 
+        var normalPracticeRounds = buildRoundsForAllQuestions(questions);
+        var normalPracticeRounds2 = buildRoundsForAllQuestions(questions);
+        normalPracticeRounds = normalPracticeRounds.concat(normalPracticeRounds2);
+
+        var game = {
+            "normalPracticeRounds": normalPracticeRounds
+        };
+
+        return game;
+    }
+
+    function evaluate_answer(answer_index) {
+        if(answer_index == currentRound["correct_answer_index"]) {
+            // They answered correctly
+            if (roundsLeft() > 0) {
+                // There are rounds left
+
+                // Use global currentRound
+                currentRound = nextRound();
+
+                // The round has changed so rebuild the displayPackage
+                buildDisplayPackageFromCurrentRound();
+            } else {
+                buildDisplayPackageForGameFinished();
+            }
+        } 
+        else {
+            // They answered incorrectly
+            question = currentRound["question"]
+            processWrongAnswer(question);
+
+            // The roundsLeft has changed so rebuild the displayPackage
+            buildDisplayPackageFromCurrentRound();
+        }
+
+        embedDisplayPackageIntoHtml(); 
+    }
+
+    function roundsLeft() {
+        return game["normalPracticeRounds"].length;
+    }
+
+    function processWrongAnswer(question) {
+        // Add 2 extra practice rounds for the missed question
+        round = buildSingleRound(questions, question)
+        game["normalPracticeRounds"].push(round)
+
+        round = buildSingleRound(questions, question)
+        game["normalPracticeRounds"].push(round)
+
+        // Randomize rounds so that the 2 new rounds will be mixed in
+        game["normalPracticeRounds"] = shuffle(game["normalPracticeRounds"]);
+
+        // Add 2 extra practice rounds for the missed question
+        // They will be the next 2 rounds
+        round = buildSingleRound(questions, question)
+        game["normalPracticeRounds"].push(round)
+
+        round = buildSingleRound(questions, question)
+        game["normalPracticeRounds"].push(round)
+    }
+
+    function nextRound() {
+        return game["normalPracticeRounds"].pop();
+    }
+
+    function buildFormForPossibleAnswer(answer_index, answer_value) {
+        var html = "<button class='btn btn-primary btn-lg' type='button' onClick='evaluate_answer(" + answer_index + ")'>" + answer_value + "</button>";
+        return html
+    }
+
+    function buildDisplayPackageFromCurrentRound() {
+        displayPackage.question_div = currentRound["question"];
+
+        var answer_value_0 = currentRound["possible_answers"][0];
+        var html_0 = buildFormForPossibleAnswer(0, answer_value_0)
+        displayPackage.possible_answer_0_div = html_0
+
+        var answer_value_1 = currentRound["possible_answers"][1];
+        var html_1 = buildFormForPossibleAnswer(1, answer_value_1)
+        displayPackage.possible_answer_1_div = html_1
+
+        displayPackage.roundsLeft = "Remaining: " + roundsLeft();
+    }
+
+    function buildDisplayPackageForGameFinished() {
+        displayPackage.question_div          = "Game Complete!";
+        displayPackage.possible_answer_0_div = "<button class='btn btn-primary btn-lg' type='button' onclick='window.location.reload()'>Click to play again</button>";
+        displayPackage.possible_answer_1_div = "";
+        displayPackage.roundsLeft            = "";
+    }
+
+    function embedDisplayPackageIntoHtml() {
+        document.getElementById('question_div').innerHTML          = displayPackage.question_div
+        document.getElementById('possible_answer_0_div').innerHTML = displayPackage.possible_answer_0_div
+        document.getElementById('possible_answer_1_div').innerHTML = displayPackage.possible_answer_1_div 
+        document.getElementById('roundsLeft').innerHTML            = displayPackage.roundsLeft
+    }
+
+    var game = buildGame(questions);
+    var currentRound = nextRound();
+    var displayPackage = new Object();
+    buildDisplayPackageFromCurrentRound();
+
+    // Wait until after the DOM is loaded
+    window.onload = function() {
+        embedDisplayPackageIntoHtml();
+    }
+
+    // end hide -->
+</SCRIPT>
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/custom.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Smart Students</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">SAT Study Words 1 to 25</a></li>
+            <li><a href="#more">More</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="starter-template">
+        <h1>
+          <div id="question_div"></div>
+        </h1>
+        <div id="possible_answer_0_div"></div>
+        <div>&nbsp;</div>
+        <div id="possible_answer_1_div"></div>
+        <div>&nbsp;</div>
+        <div id="roundsLeft" class="text-muted"></div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>
+
+
